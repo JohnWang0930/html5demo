@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style type="text/css">
+        .drag_father1{
+            background-color: gray;
+            width:200px;
+            height:200px;
+        }
+        .drag_father2{
+            background-color: yellow;
+            width:200px;
+            height:200px;
+        }
+        .drag_son{
+            width: 50px;
+            height: 50px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="drag_father1"></div>
+    <div class="drag_father2">
+        <div class="drag_son" draggable="true"></div>
+    </div>
+
+
+    <script>
+        const father1 = document.getElementsByClassName('drag_father1')[0]
+        const father2 = document.getElementsByClassName('drag_father2')[0]
+        const son = document.getElementsByClassName('drag_son')[0]
+        son.ondragstart = (e) =>{
+          e.dataTransfer.setData("class",e.target.className);
+        }
+        father2.ondragover = father1.ondragover = (e)=>{
+          e.preventDefault()
+        }
+        father2.ondrop = father1.ondrop=(e)=>{
+          console.log(e)
+          e.preventDefault()
+          let data=e.dataTransfer.getData("class")
+          e.target.appendChild(document.getElementsByClassName(data)[0])
+        }
+    </script>
+</body>
+</html>
